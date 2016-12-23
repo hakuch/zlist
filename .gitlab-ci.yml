@@ -1,0 +1,45 @@
+stages:
+  - build
+  - test
+  - deploy
+
+compile:
+  stage: build
+  tags:
+    - shared
+  image: ocaml/opam:ubuntu-16.04_ocaml-4.03.0_flambda
+  script:
+    - opam update
+    - opam pin add zlist . -n
+    - opam install zlist -t --deps-only
+    - ocaml pkg/pkg.ml build --tests true --pinned true
+    - ocamlbuild doc/api.docdir/index.html
+  artifacts:
+    paths:
+      - _build/test/test_zlist.native
+      - _build/doc/api.docdir
+
+test:
+  stage: test
+  tags:
+    - shared
+  script:
+    - ./_build/test/test_zlist.native
+  dependencies:
+    - compile
+
+pages:
+  stage: deploy
+  tags:
+    - shared
+  script:
+    - mkdir public
+    - cp -r _build/doc/api.docdir/* public
+  artifacts:
+    paths:
+      - public
+  dependencies:
+    - compile
+    - test
+  only:
+    - master

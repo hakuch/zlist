@@ -1,0 +1,5 @@
+true: safe_string, bin_annot, thread, optimize(3)
+
+<lib>: include
+
+<test/**>: package(alcotest)
