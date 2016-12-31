@@ -4,11 +4,11 @@
 
 ## About
 
+[![build status](https://gitlab.com/jhaberku/Zlist/badges/master/build.svg)](https://gitlab.com/jhaberku/Zlist/commits/master)
+
 Development is hosted at [GitLab](https://gitlab.com/jhaberku/Zlist).
 
 API documentation can be found [online](http://jhaberku.gitlab.io/Zlist/Zlist.html).
-
-[![build status](https://gitlab.com/jhaberku/Zlist/badges/master/build.svg)](https://gitlab.com/jhaberku/Zlist/commits/master)
 
 ## Inspiration
 
