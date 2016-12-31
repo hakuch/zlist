@@ -1,4 +1,4 @@
-version = "0.1.0"
+version = "%%VERSION_NUM%%"
 description = "Lazy list data structure."
 requires = ""
 archive(byte) = "zlist.cma"

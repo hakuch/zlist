@@ -1,6 +1,6 @@
 (** Lazy lists for OCaml.
 
-    This is version [0.1.0].
+    This is version %%VERSION_NUM%%.
 
     Copyright 2016 Jesse Haber-Kucharsky.
     See [LICENCE]. *)

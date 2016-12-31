@@ -1,5 +1,7 @@
 # zlist: Lazy lists for OCaml
 
+%%VERSION%%
+
 `zlist` consists of the definition of a lazy list type and a number of useful functions for manipulating and constructing lazy lists.
 
 ## About
