@@ -8,10 +8,11 @@ bug-reports: "https://gitlab.com/jhaberku/Zlist/issues"
 license: "Apache 2.0"
 dev-repo: "https://gitlab.com/jhaberku/Zlist.git"
 build: [
-  ["ocaml" "pkg/pkg.ml" "build" "--tests" "false" "--pinned" pinned]
+  "ocaml" "pkg/pkg.ml" "build" "--pinned" "%{pinned}%"
 ]
 build-test: [
-  ["ocaml" "pkg/pkg.ml" "build" "--tests" "true" "--pinned" pinned]
+  ["ocaml" "pkg/pkg.ml" "build" "--pinned" "%{pinned}%" "--tests" "true"]
+  ["ocaml" "pkg/pkg.ml" "test"]
 ]
 depends: [
   "alcotest" {test & >= "0.7.2"}
