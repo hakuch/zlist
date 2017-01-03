@@ -26,7 +26,7 @@ $ opam install zlist
 
 ## Building
 
-Alternatively, you can build and install props from its sources. This requires the topkg-care package.
+Alternatively, you can build and install `zlist` from its sources. This is easiest with the `topkg-care` package installed.
 
 First, pin the sources using `opam`:
 
