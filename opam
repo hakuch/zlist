@@ -1,6 +1,4 @@
 opam-version: "1.2"
-name: "zlist"
-version: "%%VERSION_NUM%%"
 maintainer: "Jesse Haber-Kucharsky <jesse@haberkucharsky.com>"
 authors: "Jesse Haber-Kucharsky <jesse@haberkucharsky.com>"
 homepage: "https://gitlab.com/jhaberku/Zlist"
