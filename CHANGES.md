@@ -1,3 +1,8 @@
+v0.1.2 2017-01-03
+-------
+
+- Corrections to the `opam` file and to the README.
+
 v0.1.1 2017-01-01
 -------
 
