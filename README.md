@@ -8,7 +8,7 @@
 
 [![build status](https://gitlab.com/jhaberku/Zlist/badges/master/build.svg)](https://gitlab.com/jhaberku/Zlist/commits/master)
 
-Development is hosted at [GitLab](https://gitlab.com/jhaberku/Zlist).
+Development is hosted at [GitLab](https://gitlab.com/jhaberku/Zlist) and mirrored at [GitHub](https://github.com/hakuch/Zlist).
 
 API documentation can be found [online](http://jhaberku.gitlab.io/Zlist/Zlist.html).
 
