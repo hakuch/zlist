@@ -57,7 +57,7 @@ type 'a t =
   | Cons of 'a Lazy.t * 'a t Lazy.t
 ```
 
-That is, unlike a normal list, both the head and tail of a cons cell is lazily-evaluated. This lazy structure allows us to generate infinite lists and to apply arbitrary transformations to the list without constructing new instances in memory.
+That is, unlike a normal list, both the head and tail of a cons cell are lazily-evaluated. This lazy structure allows us to generate infinite lists and to apply arbitrary transformations to the list without constructing new instances in memory.
 
 ### Examples
 
