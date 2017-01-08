@@ -26,24 +26,25 @@ $ opam install zlist
 
 ## Building
 
-Alternatively, you can build and install `zlist` from its sources. This is easiest with the `topkg-care` package installed.
+Alternatively, you can build and install `zlist` from its sources.
 
 First, pin the sources using `opam`:
 
 ```bash
-$ opam pin add zlist <TOP-LEVEL SOURCE DIRECTORY>
+$ opam pin add -n zlist <TOP-LEVEL SOURCE DIRECTORY>
+$ opam install zlist -t --deps-only
 ```
 
 then build the package:
 
 ```bash
-$ topkg build
+$ ocaml pkg/pkg.ml build
 ```
 
 After the package is built, `zlist`'s test suite is run by invoking
 
 ```bash
-$ topkg test
+$ ocaml pkg/pkg.ml test
 ```
 
 ## Lazy lists
