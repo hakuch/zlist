@@ -29,7 +29,7 @@
     - Generate an infinite sequence of even numbers and sample 10 of them:
     {[
       let evens = enum_from 0 |> map (fun x -> 2 * x) in
-      evens |> take 4 ;;
+      evens |> take 4 |> strict;;
     ]}
     {[
       - : int list = [0; 2; 4; 6]
