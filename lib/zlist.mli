@@ -38,7 +38,7 @@
     - Compute an infinite list of Fibonacci numbers and sample 8 of them:
     {[
       let fibs = iterate (0, 1) (fun (a, b) -> b, a + b) |> map snd in
-      fibs |> take 8 |> to_list ;;
+      fibs |> take 8 |> strict ;;
     ]}
     {[
       - : int list = [1; 1; 2; 3; 5; 8; 13; 21]
@@ -58,7 +58,7 @@
             sort smaller ++ unit p ++ sort greater
           end
       in
-      sort (of_list [10; 2; 8; 5; 1; 0; 20; 3]) |> to_list ;;
+      sort (elems [10; 2; 8; 5; 1; 0; 20; 3]) |> strict ;;
     ]}
     {[
       - : int list = [20; 10; 8; 5; 3; 2; 1; 0]
@@ -75,7 +75,7 @@ module Lazy_list : sig
 
   (** {1 Construction} *)
 
-  val of_list :
+  val elems :
     'a list -> 'a t
 
   val of_array :
@@ -232,7 +232,7 @@ module Lazy_list : sig
 
   (** {1 Folding} *)
 
-  val to_list :
+  val strict :
     'a t -> 'a list
   (** Realize a lazy list into a strict list. *)
 

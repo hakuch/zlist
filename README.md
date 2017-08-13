@@ -77,7 +77,7 @@ let evens = Lazy_list.(enum_from 0 |> map (fun x -> 2 * x)) ;;
 and observe the first 10:
 
 ```ocaml
-Lazy_list.(take 10 evens |> to_list) ;;
+Lazy_list.(take 10 evens |> strict) ;;
 
 - : int list = [0; 2; 4; 6; 8; 10; 12; 14; 16; 18]
 ```
@@ -86,7 +86,7 @@ The fibonacci numbers can be generated via `Lazy_list.unfold`:
 
 ```ocaml
 let fibs = Lazy_list.unfold (0, 1) (fun (a, b) -> Some ((b, a + b), a)) ;;
-fibs |> Lazy_list.(take 10 |> to_list) ;;
+fibs |> Lazy_list.(take 10 |> strict) ;;
 
 - : int list = [0; 1; 1; 2; 3; 5; 8; 13; 21; 34]
 ```

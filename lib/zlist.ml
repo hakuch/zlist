@@ -98,10 +98,10 @@ module Lazy_list = struct
         loop 0
       end
 
-  let of_list xs =
+  let elems xs =
     List.fold_right (fun x xs -> Cons (lazy x, lazy xs)) xs Nil
 
-  let to_list (t : 'a t) =
+  let strict (t : 'a t) =
     fold_right (lazy []) (fun x xs -> x :: !!xs) t
 
   let rec iterate z f =
