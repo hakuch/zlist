@@ -52,10 +52,10 @@
     {[
       let rec sort = function
         | Nil -> Nil
-        | Cons (p, lxs) -> begin
-            let smaller = filter ((<) p) !!lxs in
-            let greater = filter ((>=) p) !!lxs in
-            sort smaller ++ unit p ++ sort greater
+        | Cons (lazy x, lxs) -> begin
+            let smaller = filter ((<) x) !!lxs in
+            let greater = filter ((>=) x) !!lxs in
+            sort smaller ++ unit x ++ sort greater
           end
       in
       sort (elems [10; 2; 8; 5; 1; 0; 20; 3]) |> strict ;;
