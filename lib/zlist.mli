@@ -247,6 +247,10 @@ module Lazy_list : sig
     'b -> ('b -> 'a -> 'b) -> 'a t -> 'b
   (** Fold over a lazy list from the left with an accumulation function. *)
 
+  val length :
+    _ t -> int
+  (** The number of elements in the lazy list. *)
+
 
 
   (** {1 Iterating} *)

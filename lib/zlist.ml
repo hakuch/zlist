@@ -167,7 +167,7 @@ module Lazy_list = struct
       end
 
   let length t =
-    fold_left 0 (+) t
+    fold_left 0 (fun n _ -> n + 1) t
 
   let cycle t =
     continually t |> flatten

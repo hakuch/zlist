@@ -222,6 +222,11 @@ module Test_lazy_list = struct
           end
     end;
 
+    begin "length", `Quick, fun () ->
+        check int "empty" 0 (length Nil);
+        check int "basic" 3 (length (elems [10; 20; 30]))
+    end;
+
     begin "fold_left", `Quick, fun () ->
         check int "basic" 10
           begin
