@@ -107,10 +107,10 @@ module Lazy_list = struct
   let rec iterate z f =
     Cons (lazy z, lazy (iterate (f z) f))
 
-  let rec enum_from z =
+  let enum_from z =
     iterate z (fun x -> x + 1)
 
-  let rec enum_from_to low high =
+  let enum_from_to low high =
     enum_from low |> take_while (fun x -> x <= high)
 
   let rec zip_with f tx ty =
