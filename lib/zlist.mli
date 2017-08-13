@@ -251,6 +251,10 @@ module Lazy_list : sig
     _ t -> int
   (** The number of elements in the lazy list. *)
 
+  val equal :
+    ('a -> 'a -> bool) -> 'a t -> 'a t -> bool
+  (** Compare two lazy lists for equality with an element comparison function. *)
+
 
 
   (** {1 Iterating} *)

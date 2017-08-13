@@ -144,6 +144,17 @@ module Lazy_list = struct
       | Cons (x, xs), Cons (y, ys) -> Some ((!!xs, !!ys), f (Some !!x) (Some !!y))
     end
 
+  let equal f tx ty =
+    zip_all_with
+      (fun xo yo ->
+         match xo, yo with
+         | Some _, None | None, Some _ -> false
+         | Some x, Some y -> f x y
+         | None, None -> assert false)
+      tx
+      ty
+    |> for_all (fun x -> x)
+
   let zip_all tx ty =
     zip_all_with (fun x y -> (x, y)) tx ty
 

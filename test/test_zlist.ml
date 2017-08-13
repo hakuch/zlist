@@ -8,7 +8,7 @@ let lazy_list (type a) inner =
       a Lazy_list.t
 
     let equal expected actual =
-      equal (list inner) (Lazy_list.to_list expected) (Lazy_list.to_list actual)
+      Lazy_list.equal Pervasives.(=) expected actual
 
     let pp =
       Fmt.using Lazy_list.to_list (Fmt.list (pp inner))
