@@ -29,7 +29,6 @@ pages:
     - master
   dependencies:
     - compile_and_test
-  image: $DOCKER_IMAGE
   script:
     - mkdir public
     - cp -r _build/default/_doc/* public
