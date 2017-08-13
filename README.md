@@ -10,7 +10,7 @@
 
 Development is hosted at [GitLab](https://gitlab.com/jhaberku/Zlist) and mirrored at [GitHub](https://github.com/hakuch/Zlist).
 
-API documentation can be found [online](http://jhaberku.gitlab.io/Zlist/Zlist.html).
+API documentation can be found [online](http://jhaberku.gitlab.io/zlist/Zlist/index.html).
 
 ## Inspiration
 
@@ -38,13 +38,13 @@ $ opam install zlist -t --deps-only
 then build the package:
 
 ```bash
-$ ocaml pkg/pkg.ml build
+$ jbuilder build
 ```
 
 After the package is built, `zlist`'s test suite is run by invoking
 
 ```bash
-$ ocaml pkg/pkg.ml test
+$ jbuilder runtest
 ```
 
 ## Lazy lists

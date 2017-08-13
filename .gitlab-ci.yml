@@ -1,12 +1,11 @@
 stages:
   - build
-  - test
   - deploy
 
 variables:
-  DOCKER_IMAGE: "ocaml/opam:ubuntu-16.04_ocaml-4.03.0_flambda"
+  DOCKER_IMAGE: "ocaml/opam:ubuntu-16.04_ocaml-4.05.0_flambda"
 
-compile:
+compile_and_test:
   stage: build
   tags:
     - shared
@@ -15,22 +14,12 @@ compile:
     - opam update
     - opam pin add zlist . -n
     - opam install zlist -t --deps-only
-    - ocaml pkg/pkg.ml build --tests true
-
-    # Just to make sure that API docs can be successfully generated.
-    - ocamlbuild doc/api.docdir/index.html
+    - jbuilder build
+    - jbuilder build @doc
+    - jbuilder runtest
   artifacts:
     paths:
-      - _build/test/test_zlist.native
-
-test:
-  stage: test
-  tags:
-    - shared
-  script:
-    - ./_build/test/test_zlist.native
-  dependencies:
-    - compile
+      - _build
 
 pages:
   stage: deploy
@@ -39,22 +28,11 @@ pages:
   only:
     - master
   dependencies:
-    - test
+    - compile_and_test
   image: $DOCKER_IMAGE
   script:
-    #
-    # Install everything necessary to create nice API documentation.
-    #
-
-    - opam pin add zlist . -n
-    - opam install zlist --deps-only
-
-    - opam install odig
-    - opam install topkg-care
-    - topkg doc
-
     - mkdir public
-    - cp -r _build/doc/api.docdir/* public
+    - cp -r _build/default/_doc/* public
   artifacts:
     paths:
       - public

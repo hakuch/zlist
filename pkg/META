@@ -1,7 +1,0 @@
-version = "%%VERSION_NUM%%"
-description = "Lazy list data structure."
-requires = ""
-archive(byte) = "zlist.cma"
-plugin(byte) = "zlist.cma"
-archive(native) = "zlist.cmxa"
-plugin(native) = "zlist.cmxs"

@@ -6,15 +6,16 @@ bug-reports: "https://gitlab.com/jhaberku/Zlist/issues"
 license: "Apache 2.0"
 dev-repo: "https://gitlab.com/jhaberku/Zlist.git"
 build: [
-  "ocaml" "pkg/pkg.ml" "build" "--pinned" "%{pinned}%"
+  ["jbuilder" "build" "-p" name "-j" jobs]
 ]
 build-test: [
-  ["ocaml" "pkg/pkg.ml" "build" "--pinned" "%{pinned}%" "--tests" "true"]
-  ["ocaml" "pkg/pkg.ml" "test"]
+  ["jbuilder" "runtest" "-p" name "-j" jobs]
 ]
 depends: [
+  "jbuilder" {build & >= "1.0+beta11"}
+  "odoc" {build & >= "1.1.1"}
+  "topkg-jbuilder" {build & >= "0.1.0"}
+
   "alcotest" {test & >= "0.7.2"}
-  "ocamlbuild" {build & >= "0.9.2"}
-  "ocamlfind" {build & >= "1.6.2"}
-  "topkg" {build & >= "0.7.8"}
 ]
+available: [ocaml-version >= "4.05.0"]
