@@ -1,39 +1,38 @@
-(** For convenience. *)
-let ( !! ) =
-  Lazy.force
+let ( !! ) = Lazy.force
 
 module Lazy_list = struct
-  type 'a t =
+  type 'a t = 'a node Lazy.t
+  and 'a node =
     | Nil
-    | Cons of 'a Lazy.t * 'a t Lazy.t
+    | Cons of 'a * 'a t
 
-  let unit a =
-    Cons (lazy a, lazy Nil)
+  let unit x =
+    lazy (Cons (x, lazy Nil))
 
   let head = function
-    | Nil -> None
-    | Cons (x, _) -> Some !!x
+    | lazy Nil -> None
+    | lazy (Cons (x, _)) -> Some x
 
   let tail = function
-    | Nil -> Nil
-    | Cons (_, xs) -> !!xs
+    | lazy Nil -> lazy Nil
+    | lazy (Cons (_, t)) -> t
 
-  let rec concat a b =
-    match a with
-    | Nil -> b
-    | Cons (x, xs) -> Cons (x, lazy (concat !!xs b))
+  let rec concat t1 t2 =
+    match t1 with
+    | lazy Nil -> t2
+    | lazy (Cons (lx, t)) -> lazy (Cons (lx, concat t t2))
 
   let rec continually x =
-    Cons (lazy x, lazy (continually x))
+    lazy (Cons (x, continually x))
 
   let rec fold_right z f = function
-    | Nil -> !!z
-    | Cons (x, xs) -> f !!x (lazy (fold_right z f !!xs))
+    | lazy Nil -> !!z
+    | lazy (Cons (x, t)) -> f x (lazy (fold_right z f t))
 
   let fold_left z f t =
-    let rec loop accum = function
-      | Nil -> accum
-      | Cons (x, xs) -> loop (f accum !!x) !!xs
+    let rec loop acc = function
+      | lazy Nil -> acc
+      | lazy (Cons (x, t)) -> loop (f acc x) t
     in
     loop z t
 
@@ -41,71 +40,72 @@ module Lazy_list = struct
     fold_right (lazy false) (fun a lb -> f a || !!lb)
 
   let rec for_all f = function
-    | Nil -> true
-    | Cons (x, xs) -> f !!x && (for_all f !!xs)
+    | lazy Nil -> true
+    | lazy (Cons (x, t)) -> f x && for_all f t
 
   let rec take n t =
-    if n <= 0 then Nil
+    if n <= 0 then lazy Nil
     else
       match t with
-      | Nil -> Nil
-      | Cons (x, xs) -> Cons (x, lazy (take (n - 1) !!xs))
+      | lazy Nil -> lazy Nil
+      | lazy (Cons (x, t)) -> lazy (Cons (x, take (n - 1) t))
 
   let rec take_while p = function
-    | Nil -> Nil
-    | Cons (x, xs) -> begin
-        if p !!x then Cons (x, lazy (take_while p !!xs))
-        else Nil
+    | lazy Nil -> lazy Nil
+    | lazy (Cons (x, t)) -> begin
+        if p x then lazy (Cons (x, take_while p t))
+        else lazy Nil
       end
 
   let rec drop n t =
     if n <= 0 then t
     else
       match t with
-      | Nil -> Nil
-      | Cons (_, xs) -> drop (n - 1) !!xs
+      | lazy Nil -> lazy Nil
+      | lazy (Cons (_, t)) -> drop (n - 1) t
 
   let rec drop_while p = function
-    | Nil -> Nil
-    | Cons (x, xs) as t -> begin
-        if p !!x then drop_while p !!xs
-        else t
+    | lazy Nil -> lazy Nil
+    | lazy (Cons (x, t)) as tt -> begin
+        if p x then drop_while p t
+        else tt
       end
 
+  let fill n x =
+    continually x |> take n
+
   let rec map f = function
-    | Nil -> Nil
-    | Cons (x, xs) -> Cons (lazy (f !!x), lazy (map f !!xs))
+    | lazy Nil -> lazy Nil
+    | lazy (Cons (x, lxs)) -> lazy (Cons (f x, map f lxs))
 
-  let filter f =
-    fold_right (lazy Nil)
-      (fun x xs ->
-         if f x then Cons (lazy x, xs)
-         else !!xs)
-
-  let rec fill n x =
-    if n <= 0 then Nil
-    else
-      Cons (lazy x, lazy (fill (n - 1) x))
+  let filter p t =
+    fold_right
+      (lazy (lazy Nil))
+      (fun x lt ->
+         if p x then lazy (Cons (x, !!lt))
+         else !!lt)
+      t
 
   let of_array = function
-    | [||] -> Nil
+    | [||] -> lazy Nil
     | arr -> begin
-        let rec loop index =
-          if index = Array.length arr then Nil
-          else
-            Cons (lazy arr.(index), lazy (loop (index + 1)))
+        let length = Array.length arr in
+
+        let rec loop i =
+          if i = length then lazy Nil
+          else lazy (Cons (arr.(i), loop (i + 1)))
         in
         loop 0
       end
 
   let elems xs =
-    List.fold_right (fun x xs -> Cons (lazy x, lazy xs)) xs Nil
+    List.fold_right (fun x t -> lazy (Cons (x, t))) xs (lazy Nil)
 
-  let strict (t : 'a t) =
-    fold_right (lazy []) (fun x xs -> x :: !!xs) t
+  let strict t =
+    fold_right (lazy []) (fun x t -> x :: !!t) t
 
   let rec iterate z f =
-    Cons (lazy z, lazy (iterate (f z) f))
+    lazy (Cons (z, iterate (f z) f))
 
   let enum_from z =
     iterate z (fun x -> x + 1)
@@ -113,69 +113,73 @@ module Lazy_list = struct
   let enum_from_to low high =
     enum_from low |> take_while (fun x -> x <= high)
 
-  let rec zip_with f tx ty =
-    match (tx, ty) with
-    | (Nil, _) | (_, Nil) -> Nil
-    | (Cons (x, lxs), Cons (y, lys)) -> Cons (lazy (f !!x !!y), lazy (zip_with f !!lxs !!lys))
+  let rec zip_with f t1 t2 =
+    match (t1, t2) with
+    | (lazy Nil, _) | (_, lazy Nil) -> lazy Nil
+    | (lazy (Cons (x, t1)), lazy (Cons (y, t2))) -> lazy (Cons (f x y, zip_with f t1 t2))
 
-  let zip (tx : 'a t) (ty : 'b t) =
-    zip_with (fun x y -> (x, y)) tx ty
+  let zip t1 t2 =
+    zip_with (fun x y -> (x, y)) t1 t2
 
   let rec iter f = function
-    | Nil -> ()
-    | Cons (x, xs) -> begin
-        f !!x;
-        iter f !!xs
+    | lazy Nil -> ()
+    | lazy (Cons (x, t)) -> begin
+        f x;
+        iter f t
       end
 
   let unfold s f =
     let rec loop s =
       match f s with
-      | Some (s, a) -> Cons (lazy a, lazy (loop s))
-      | None -> Nil
+      | Some (s, x) -> lazy (Cons (x, loop s))
+      | None -> lazy Nil
     in
     loop s
 
-  let zip_all_with f tx ty  =
-    unfold (tx, ty) begin function
-      | Nil, Nil -> None
-      | Cons (x, xs), Nil -> Some ((!!xs, Nil), f (Some !!x) None)
-      | Nil, Cons (y, ys) -> Some ((Nil, !!ys), f None (Some !!y))
-      | Cons (x, xs), Cons (y, ys) -> Some ((!!xs, !!ys), f (Some !!x) (Some !!y))
-    end
+  let zip_all_with f t1 t2 =
+    unfold (t1, t2) (function
+        | lazy Nil, lazy Nil -> None
+        | lazy (Cons (x, t1)), lazy Nil -> Some ((t1, lazy Nil), f (Some x) None)
+        | lazy Nil, lazy (Cons (y, t2)) -> Some ((lazy Nil, t2), f None (Some y))
+        | lazy (Cons (x, t1)), lazy (Cons (y, t2)) -> Some ((t1, t2), f (Some x) (Some y)))
 
-  let equal f tx ty =
+  let equal f t1 t2 =
     zip_all_with
       (fun xo yo ->
          match xo, yo with
          | Some _, None | None, Some _ -> false
          | Some x, Some y -> f x y
          | None, None -> assert false)
-      tx
-      ty
+      t1
+      t2
     |> for_all (fun x -> x)
 
-  let zip_all tx ty =
-    zip_all_with (fun x y -> (x, y)) tx ty
+  let zip_all t1 t2 =
+    zip_all_with (fun x y -> (x, y)) t1 t2
 
   let rec find p = function
-    | Cons (x, xs) -> if p !!x then Some !!x else find p !!xs
-    | Nil -> None
-
-  let flat_map f t =
-    let lazy_concat t lt = fold_right lt (fun x lt -> Cons (lazy x, lt)) t in
-    fold_right (lazy Nil) (fun x lt -> lazy_concat (f x) lt) t
+    | lazy Nil -> None
+    | lazy (Cons (x, t)) -> if p x then Some x else find p t
 
   let flatten t =
-    flat_map (fun xs -> xs) t
+    let lazy_concat t lt = fold_right lt (fun x lt -> lazy (Cons (x, !!lt))) t in
 
-  let rec map_filter f = function
-    | Nil -> Nil
-    | Cons (x, xs) -> begin
-        match f !!x with
-        | None -> map_filter f !!xs
-        | Some y -> Cons (lazy y, lazy (map_filter f !!xs))
-      end
+    fold_right
+      (lazy (lazy Nil))
+      lazy_concat
+      t
+
+  let flat_map f t =
+    map f t |> flatten
+
+  let map_filter f t =
+    fold_right
+      (lazy (lazy Nil))
+      (fun x lt ->
+         match f x with
+         | Some y -> lazy (Cons (y, !!lt))
+         | None -> !!lt)
+      t
 
   let length t =
     fold_left 0 (fun n _ -> n + 1) t

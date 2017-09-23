@@ -24,7 +24,7 @@ module Test_lazy_list = struct
         check (lazy_list int) "basic" (elems [1; 2; 3])
           (of_array [| 1; 2; 3 |]);
 
-        check (lazy_list int) "empty" Nil
+        check (lazy_list int) "empty" (lazy Nil)
           (of_array [| |])
     end;
 
@@ -77,15 +77,15 @@ module Test_lazy_list = struct
           (elems ['a'; 'b'; 'c'] |> head);
 
         check (option char) "empty" None
-          (head Nil);
+          (head (lazy Nil));
     end;
 
     begin "tail", `Quick, fun () ->
         check (lazy_list int) "basic" (elems [2; 3])
           (elems [1; 2; 3] |> tail);
 
-        check (lazy_list int) "empty" Nil
-          (tail Nil)
+        check (lazy_list int) "empty" (lazy Nil)
+          (tail (lazy Nil))
     end;
 
     begin "take", `Quick, fun () ->
@@ -223,7 +223,7 @@ module Test_lazy_list = struct
     end;
 
     begin "length", `Quick, fun () ->
-        check int "empty" 0 (length Nil);
+        check int "empty" 0 (length (lazy Nil));
         check int "basic" 3 (length (elems [10; 20; 30]))
     end;
 

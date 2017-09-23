@@ -52,12 +52,13 @@ $ jbuilder runtest
 The type of a lazy list is
 
 ```ocaml
-type 'a t =
+type 'a t = 'a node Lazy.t
+and 'a node =
   | Nil
-  | Cons of 'a Lazy.t * 'a t Lazy.t
+  | Cons of 'a * 'a t
 ```
 
-That is, unlike a normal list, both the head and tail of a cons cell are lazily-evaluated. This lazy structure allows us to generate infinite lists and to apply arbitrary transformations to the list without constructing new instances in memory.
+This lazy structure allows us to generate infinite lists and to apply arbitrary transformations to the list without constructing new instances in memory.
 
 ### Examples
 

@@ -67,9 +67,10 @@ module Lazy_list : sig
 
   (** {1 Representation} *)
 
-  type 'a t =
+  type 'a t = 'a node Lazy.t
+  and 'a node =
     | Nil
-    | Cons of 'a Lazy.t * 'a t Lazy.t
+    | Cons of 'a * 'a t
 
 
 
