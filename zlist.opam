@@ -1,18 +1,24 @@
-opam-version: "1.2"
+opam-version: "2.0"
 maintainer: "Jesse Haber-Kucharsky <jesse@haberkucharsky.com>"
 authors: "Jesse Haber-Kucharsky <jesse@haberkucharsky.com>"
 homepage: "https://gitlab.com/jhaberku/Zlist"
 bug-reports: "https://gitlab.com/jhaberku/Zlist/issues"
 license: "Apache 2.0"
-dev-repo: "https://gitlab.com/jhaberku/Zlist.git"
+dev-repo: "git+https://gitlab.com/jhaberku/Zlist"
 build: [
-  ["dune" "subst" "-p" name] {pinned}
+  ["dune" "subst"] {pinned}
   ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "build" "-p" name "-j" jobs "@doc"] {with-doc}
+]
+run-test: [
+  ["dune" "runtest" "-p" name "-j" jobs]
 ]
 depends: [
-  "dune" {build & >= "1.0.0"}
-  "odoc" {build & >= "1.1.1"}
+  "ocaml" {>= "4.05.0"}
 
-  "alcotest" {test & >= "0.8.1"}
+  "dune" {build & >= "1.0.0"}
+
+  "odoc" {with-doc & >= "1.1.1"}
+
+  "alcotest" {with-test & >= "0.8.1"}
 ]
-available: [ocaml-version >= "4.05.0"]

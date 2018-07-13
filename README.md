@@ -32,7 +32,7 @@ First, pin the sources using `opam`:
 
 ```bash
 $ opam pin add -n zlist <TOP-LEVEL SOURCE DIRECTORY>
-$ opam install zlist -t --deps-only
+$ opam install zlist -t -d --deps-only
 ```
 
 then build the package:

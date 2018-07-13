@@ -12,8 +12,8 @@ compile_and_test:
   image: $DOCKER_IMAGE
   script:
     - opam update
-    - opam pin add zlist . -n
-    - opam install zlist -t --deps-only
+    - opam pin -y -n add zlist .
+    - opam install -y -t -d --deps-only zlist
     - dune build
     - dune build @doc
     - dune runtest
