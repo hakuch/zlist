@@ -38,13 +38,13 @@ $ opam install zlist -t --deps-only
 then build the package:
 
 ```bash
-$ jbuilder build
+$ dune build
 ```
 
 After the package is built, `zlist`'s test suite is run by invoking
 
 ```bash
-$ jbuilder runtest
+$ dune runtest
 ```
 
 ## Lazy lists

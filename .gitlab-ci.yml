@@ -14,9 +14,9 @@ compile_and_test:
     - opam update
     - opam pin add zlist . -n
     - opam install zlist -t --deps-only
-    - jbuilder build
-    - jbuilder build @doc
-    - jbuilder runtest
+    - dune build
+    - dune build @doc
+    - dune runtest
   artifacts:
     paths:
       - _build
@@ -31,7 +31,7 @@ pages:
     - compile_and_test
   script:
     - mkdir public
-    - cp -r _build/default/_doc/* public
+    - cp -r _build/default/_doc/_html/* public
   artifacts:
     paths:
       - public

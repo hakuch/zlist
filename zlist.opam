@@ -6,15 +6,12 @@ bug-reports: "https://gitlab.com/jhaberku/Zlist/issues"
 license: "Apache 2.0"
 dev-repo: "https://gitlab.com/jhaberku/Zlist.git"
 build: [
-  ["jbuilder" "build" "-p" name "-j" jobs]
-]
-build-test: [
-  ["jbuilder" "runtest" "-p" name "-j" jobs]
+  ["dune" "subst" "-p" name] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
 ]
 depends: [
-  "jbuilder" {build & >= "1.0+beta11"}
+  "dune" {build & >= "1.0.0"}
   "odoc" {build & >= "1.1.1"}
-  "topkg-jbuilder" {build & >= "0.1.0"}
 
   "alcotest" {test & >= "0.8.1"}
 ]
