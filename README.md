@@ -47,51 +47,6 @@ After the package is built, `zlist`'s test suite is run by invoking
 $ dune runtest
 ```
 
-## Lazy lists
-
-The type of a lazy list is
-
-```ocaml
-type 'a t = 'a node Lazy.t
-and 'a node =
-  | Nil
-  | Cons of 'a * 'a t
-```
-
-This lazy structure allows us to generate infinite lists and to apply arbitrary transformations to the list without constructing new instances in memory.
-
-### Examples
-
-Assume this following code has been evaluated in the OCaml top-level:
-
-```ocaml
-#require "zlist" ;;
-open Zlist ;;
-```
-
-We can generate an infinite list of even integers:
-
-```ocaml
-let evens = Lazy_list.(enum_from 0 |> map (fun x -> 2 * x)) ;;
-```
-
-and observe the first 10:
-
-```ocaml
-Lazy_list.(take 10 evens |> strict) ;;
-
-- : int list = [0; 2; 4; 6; 8; 10; 12; 14; 16; 18]
-```
-
-The fibonacci numbers can be generated via `Lazy_list.unfold`:
-
-```ocaml
-let fibs = Lazy_list.unfold (0, 1) (fun (a, b) -> Some ((b, a + b), a)) ;;
-fibs |> Lazy_list.(take 10 |> strict) ;;
-
-- : int list = [0; 1; 1; 2; 3; 5; 8; 13; 21; 34]
-```
-
 ## License
 
 `zlist` is copyright 2016 by Jesse Haber-Kucharsky.
