@@ -3,7 +3,7 @@ stages:
   - deploy
 
 variables:
-  DOCKER_IMAGE: "ocaml/opam-dev:ubuntu-16.04_ocaml-4.05.0_flambda"
+  DOCKER_IMAGE: "registry.gitlab.com/jhaberku/zlist:ci"
 
 compile_and_test:
   stage: build
