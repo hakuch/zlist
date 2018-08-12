@@ -1,5 +1,4 @@
 (library
-  (name zlist)
   (public_name zlist)
   (inline_tests)
   (preprocess (pps ppx_inline_test)))

@@ -16,7 +16,7 @@ run-test: [
 depends: [
   "ocaml" {>= "4.05.0"}
 
-  "dune" {build & >= "1.0.0"}
+  "dune" {build & >= "1.1.1"}
 
   "ppx_inline_test" {with-test & >= "0.10.1"}
 
