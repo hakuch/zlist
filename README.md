@@ -26,29 +26,6 @@ The easiest way to install `zlist` is through the `opam` repository:
 $ opam install zlist
 ```
 
-## Building
-
-Alternatively, you can build and install `zlist` from its sources.
-
-First, pin the sources using `opam`:
-
-```bash
-$ opam pin add -n zlist <TOP-LEVEL SOURCE DIRECTORY>
-$ opam install zlist -t -d --deps-only
-```
-
-then build the package:
-
-```bash
-$ dune build
-```
-
-After the package is built, `zlist`'s test suite is run by invoking
-
-```bash
-$ dune runtest
-```
-
 ## License
 
 `zlist` is copyright 2016 by Jesse Haber-Kucharsky.
