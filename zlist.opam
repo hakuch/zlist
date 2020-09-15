@@ -1,6 +1,6 @@
 opam-version: "2.0"
-maintainer: "Jesse Haber-Kucharsky <jesse@haberkucharsky.com>"
-authors: "Jesse Haber-Kucharsky <jesse@haberkucharsky.com>"
+maintainer: "Jesse Haber-Kucharsky <jesse@haber-kucharsky.com>"
+authors: "Jesse Haber-Kucharsky <jesse@haber-kucharsky.com>"
 homepage: "https://gitlab.com/jhaberku/Zlist"
 bug-reports: "https://gitlab.com/jhaberku/Zlist/issues"
 license: "Apache 2.0"
