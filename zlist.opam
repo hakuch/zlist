@@ -14,11 +14,8 @@ run-test: [
   ["dune" "runtest" "-p" name "-j" jobs]
 ]
 depends: [
-  "ocaml" {>= "4.05.0"}
-
   "dune" {build & >= "2.7.0"}
-
-  "ppx_inline_test" {with-test & >= "0.10.1"}
-
+  "ocaml" {>= "4.05.0"}
   "odoc" {with-doc & >= "1.1.1"}
+  "ppx_inline_test" {with-test & >= "0.10.1"}
 ]
