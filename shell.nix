@@ -6,10 +6,12 @@ let
 
   pkgs = import nixpkgs {};
   ocamlPackages = pkgs.ocaml-ng.ocamlPackages_4_11;
+  ocamlformat = pkgs.ocamlformat.override { inherit ocamlPackages; };
 in
 
 pkgs.mkShell {
   buildInputs = [
+    ocamlformat
     ocamlPackages.ocaml
   ] ++ (with ocamlPackages; [
     dune_2
