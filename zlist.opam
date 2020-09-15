@@ -19,3 +19,4 @@ depends: [
   "odoc" {with-doc}
   "ppx_inline_test" {build}
 ]
+synopsis: "Lazy lists for OCaml"
