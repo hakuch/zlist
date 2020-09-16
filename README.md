@@ -6,10 +6,6 @@
 
 ## About
 
-`master`: [![build status](https://gitlab.com/jhaberku/Zlist/badges/master/build.svg)](https://gitlab.com/jhaberku/Zlist/commits/master)
-
-`develop`: [![build status](https://gitlab.com/jhaberku/Zlist/badges/develop/build.svg)](https://gitlab.com/jhaberku/Zlist/commits/develop)
-
 Development is hosted at [GitLab](https://gitlab.com/jhaberku/Zlist) and mirrored at [GitHub](https://github.com/hakuch/Zlist).
 
 API documentation can be found [online](http://jhaberku.gitlab.io/Zlist/zlist/Zlist).
