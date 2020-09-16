@@ -4,6 +4,17 @@ type 'a t = 'a node Lazy.t
 
 and 'a node = Nil | Cons of 'a * 'a t
 
+let rec iter f = function
+  | (lazy Nil) -> ()
+  | (lazy (Cons (x, t))) -> f x ; iter f t
+
+let pp ~sep pp_item ppf t =
+  let is_first = ref true in
+  let print ppf v =
+    if !is_first then is_first := false else sep ppf () ;
+    pp_item ppf v in
+  iter (print ppf) t
+
 let rec fold_right z f = function
   | (lazy Nil) -> !!z
   | (lazy (Cons (x, t))) -> f x (lazy (fold_right z f t))
@@ -162,10 +173,6 @@ let%test _ = test_elems (enum_from 0 |> take 3) [0; 1; 2]
 let enum_from_to low high = enum_from low |> take_while (fun x -> x <= high)
 
 let%test _ = test_elems (enum_from_to 0 3) [0; 1; 2; 3]
-
-let rec iter f = function
-  | (lazy Nil) -> ()
-  | (lazy (Cons (x, t))) -> f x ; iter f t
 
 let%test _ =
   let xs = ref [] in
