@@ -3,3 +3,5 @@
  (inline_tests)
  (preprocess
   (pps ppx_expect)))
+
+(documentation (package zlist))

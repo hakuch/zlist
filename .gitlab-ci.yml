@@ -14,6 +14,7 @@ compile_and_test:
     - opam update
     - opam pin -y -n add zlist .
     - opam install -y -t -d --deps-only zlist
+    - dune subst
     - dune build
     - dune build @doc
     - dune runtest
