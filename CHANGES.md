@@ -1,3 +1,14 @@
+v0.3.0
+-------
+2020-09-16
+
+- Flatten the structure of the package so that there is a single module `Zlist` with the type `Zlist.t`
+- Add to and correct the package's documentation
+- Correct the argument order of the fold functions to be consistent with `Stdlib`
+- Rename `elems` to `items`
+- Move package documentation to a top-level landing page
+- Switch to expectation-style tests
+
 v0.2.0
 -------
 2018-08-12
