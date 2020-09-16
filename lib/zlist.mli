@@ -19,8 +19,11 @@ val pp :
 
 (** {1 Construction} *)
 
-val elems : 'a list -> 'a t
+val items : 'a list -> 'a t
+(** [items xs] is a lazy list consisting of the items in the list [xs]. *)
+
 val of_array : 'a array -> 'a t
+(** [of_array xs] is a lazy list consisting of the items in the array [xs]. *)
 
 val unit : 'a -> 'a t
 (** [unit a] constructs a lazy list consisting only of the item [a]. *)
@@ -138,13 +141,13 @@ val zip_all : 'a t -> 'b t -> ('a option * 'b option) t
 val strict : 'a t -> 'a list
 (** Realize a lazy list into a strict list. *)
 
-val fold_right : 'b Lazy.t -> ('a -> 'b Lazy.t -> 'b) -> 'a t -> 'b
+val fold_right : ('a -> 'b Lazy.t -> 'b) -> 'a t -> 'b Lazy.t -> 'b
 (** Fold over a lazy list from the right with an accumulation function.
 
     Since the folding function is lazy in the second argument, evaluation of the
     lazy list can be short-circuited. *)
 
-val fold_left : 'b -> ('b -> 'a -> 'b) -> 'a t -> 'b
+val fold_left : ('b -> 'a -> 'b) -> 'b -> 'a t -> 'b
 (** Fold over a lazy list from the left with an accumulation function. *)
 
 val length : _ t -> int
