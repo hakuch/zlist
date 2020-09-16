@@ -133,9 +133,6 @@ let equal f t1 t2 =
     t1 t2
   |> for_all (fun x -> x)
 
-let%test _ = equal ( = ) (items [1; 2; 3]) (items [1; 2; 3])
-let%test _ = not (equal ( = ) (items [1; 2; 4]) (items [1; 2; 3]))
-
 let rec find p = function
   | (lazy Nil) -> None
   | (lazy (Cons (x, t))) -> if p x then Some x else find p t
