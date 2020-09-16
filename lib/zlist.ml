@@ -29,7 +29,7 @@ let items xs = List.fold_right (fun x t -> lazy (Cons (x, t))) xs (lazy Nil)
 let rec concat t1 t2 =
   match t1 with
   | (lazy Nil) -> t2
-  | (lazy (Cons (lx, t))) -> lazy (Cons (lx, concat t t2))
+  | (lazy (Cons (x, t))) -> lazy (Cons (x, concat t t2))
 
 let rec continually x = lazy (Cons (x, continually x))
 
@@ -73,7 +73,7 @@ let fill n x = continually x |> take n
 
 let rec map f = function
   | (lazy Nil) -> lazy Nil
-  | (lazy (Cons (x, lxs))) -> lazy (Cons (f x, map f lxs))
+  | (lazy (Cons (x, t))) -> lazy (Cons (f x, map f t))
 
 let rec zip_with f t1 t2 =
   match (t1, t2) with
