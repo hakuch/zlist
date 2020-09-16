@@ -16,7 +16,7 @@ pkgs.mkShell {
   ] ++ (with ocamlPackages; [
     dune_2
     findlib
-    ppx_inline_test
+    ppx_expect
     odoc
     utop
   ]);

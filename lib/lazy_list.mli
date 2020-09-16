@@ -52,6 +52,17 @@ type 'a t = 'a node Lazy.t
 
 and 'a node = Nil | Cons of 'a * 'a t
 
+(** {1 Printing} *)
+
+val pp :
+     sep:(Format.formatter -> unit -> unit)
+  -> (Format.formatter -> 'a -> unit)
+  -> Format.formatter
+  -> 'a t
+  -> unit
+(** Pretty-print a lazy list with items separated by [sep]. This will traverse
+    the entire list, so printing an infinite or very long list is inadvisable. *)
+
 (** {1 Construction} *)
 
 val elems : 'a list -> 'a t
