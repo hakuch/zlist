@@ -141,13 +141,13 @@ val zip_all : 'a t -> 'b t -> ('a option * 'b option) t
 val strict : 'a t -> 'a list
 (** Realize a lazy list into a strict list. *)
 
-val fold_right : 'b Lazy.t -> ('a -> 'b Lazy.t -> 'b) -> 'a t -> 'b
+val fold_right : ('a -> 'b Lazy.t -> 'b) -> 'a t -> 'b Lazy.t -> 'b
 (** Fold over a lazy list from the right with an accumulation function.
 
     Since the folding function is lazy in the second argument, evaluation of the
     lazy list can be short-circuited. *)
 
-val fold_left : 'b -> ('b -> 'a -> 'b) -> 'a t -> 'b
+val fold_left : ('b -> 'a -> 'b) -> 'b -> 'a t -> 'b
 (** Fold over a lazy list from the left with an accumulation function. *)
 
 val length : _ t -> int

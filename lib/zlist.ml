@@ -15,11 +15,12 @@ let pp ~sep pp_item ppf t =
     pp_item ppf v in
   iter (print ppf) t
 
-let rec fold_right z f = function
+let rec fold_right f t z =
+  match t with
   | (lazy Nil) -> !!z
-  | (lazy (Cons (x, t))) -> f x (lazy (fold_right z f t))
+  | (lazy (Cons (x, t))) -> f x (lazy (fold_right f t z))
 
-let strict t = fold_right (lazy []) (fun x t -> x :: !!t) t
+let strict t = fold_right (fun x t -> x :: !!t) t (lazy [])
 let unit x = lazy (Cons (x, lazy Nil))
 let head = function (lazy Nil) -> None | (lazy (Cons (x, _))) -> Some x
 let tail = function (lazy Nil) -> lazy Nil | (lazy (Cons (_, t))) -> t
@@ -32,7 +33,7 @@ let rec concat t1 t2 =
 
 let rec continually x = lazy (Cons (x, continually x))
 
-let fold_left z f t =
+let fold_left f z t =
   let rec loop acc = function
     | (lazy Nil) -> acc
     | (lazy (Cons (x, t))) -> loop (f acc x) t in
@@ -51,7 +52,7 @@ let rec take_while p = function
       if p x then lazy (Cons (x, take_while p t)) else lazy Nil
 
 let rec iterate z f = lazy (Cons (z, iterate (f z) f))
-let exists f = fold_right (lazy false) (fun a lb -> f a || !!lb)
+let exists f t = fold_right (fun a lb -> f a || !!lb) t (lazy false)
 
 let rec for_all f = function
   | (lazy Nil) -> true
@@ -83,16 +84,16 @@ let rec zip_with f t1 t2 =
 let zip t1 t2 = zip_with (fun x y -> (x, y)) t1 t2
 
 let flatten t =
-  let lazy_concat t lt = fold_right lt (fun x lt -> lazy (Cons (x, !!lt))) t in
-  fold_right (lazy (lazy Nil)) lazy_concat t
+  let lazy_concat t lt = fold_right (fun x lt -> lazy (Cons (x, !!lt))) t lt in
+  fold_right lazy_concat t (lazy (lazy Nil))
 
 let cycle t = continually t |> flatten
 
 let filter p t =
   fold_right
-    (lazy (lazy Nil))
     (fun x lt -> if p x then lazy (Cons (x, !!lt)) else !!lt)
     t
+    (lazy (lazy Nil))
 
 let of_array = function
   | [||] -> lazy Nil
@@ -143,12 +144,12 @@ let flat_map f t = map f t |> flatten
 
 let map_filter f t =
   fold_right
-    (lazy (lazy Nil))
     (fun x lt ->
       match f x with Some y -> lazy (Cons (y, !!lt)) | None -> !!lt)
     t
+    (lazy (lazy Nil))
 
-let length t = fold_left 0 (fun n _ -> n + 1) t
+let length t = fold_left (fun n _ -> n + 1) 0 t
 
 let%test_module _ =
   ( module struct
@@ -279,10 +280,10 @@ let%test_module _ =
     let%test "strict" = [1; 2; 3] = strict (items [1; 2; 3])
 
     let%test "fold_right" =
-      55 = fold_right (lazy 0) (fun x n -> x + !!n) (enum_from_to 1 10)
+      55 = fold_right (fun x n -> x + !!n) (enum_from_to 1 10) (lazy 0)
 
     let%test "fold_left" =
-      55 = fold_left 0 (fun n x -> n + x) (enum_from_to 1 10)
+      55 = fold_left (fun n x -> n + x) 0 (enum_from_to 1 10)
 
     let%test "length" = 3 = length (items [1; 2; 3])
     let%test "equal - yes" = equal ( = ) (items [1; 2; 3]) (items [1; 2; 3])
