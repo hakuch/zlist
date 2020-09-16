@@ -1,3 +1,3 @@
-(lang dune 1.1)
+(lang dune 2.7)
 (name zlist)
 (version 0.3.0)
