@@ -23,6 +23,7 @@ val items : 'a list -> 'a t
 (** [items xs] is a lazy list consisting of the items in the list [xs]. *)
 
 val of_array : 'a array -> 'a t
+(** [of_array xs] is a lazy list consisting of the items in the array [xs]. *)
 
 val unit : 'a -> 'a t
 (** [unit a] constructs a lazy list consisting only of the item [a]. *)
