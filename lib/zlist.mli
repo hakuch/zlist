@@ -19,7 +19,9 @@ val pp :
 
 (** {1 Construction} *)
 
-val elems : 'a list -> 'a t
+val items : 'a list -> 'a t
+(** [items xs] is a lazy list consisting of the items in the list [xs]. *)
+
 val of_array : 'a array -> 'a t
 
 val unit : 'a -> 'a t

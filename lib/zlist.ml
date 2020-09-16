@@ -23,7 +23,7 @@ let strict t = fold_right (lazy []) (fun x t -> x :: !!t) t
 let unit x = lazy (Cons (x, lazy Nil))
 let head = function (lazy Nil) -> None | (lazy (Cons (x, _))) -> Some x
 let tail = function (lazy Nil) -> lazy Nil | (lazy (Cons (_, t))) -> t
-let elems xs = List.fold_right (fun x t -> lazy (Cons (x, t))) xs (lazy Nil)
+let items xs = List.fold_right (fun x t -> lazy (Cons (x, t))) xs (lazy Nil)
 
 let rec concat t1 t2 =
   match t1 with
@@ -132,8 +132,8 @@ let equal f t1 t2 =
     t1 t2
   |> for_all (fun x -> x)
 
-let%test _ = equal ( = ) (elems [1; 2; 3]) (elems [1; 2; 3])
-let%test _ = not (equal ( = ) (elems [1; 2; 4]) (elems [1; 2; 3]))
+let%test _ = equal ( = ) (items [1; 2; 3]) (items [1; 2; 3])
+let%test _ = not (equal ( = ) (items [1; 2; 4]) (items [1; 2; 3]))
 
 let rec find p = function
   | (lazy Nil) -> None
@@ -160,8 +160,8 @@ let%test_module _ =
         (pp ~sep Format.pp_print_int)
         t
 
-    let%expect_test "elems" =
-      print (elems [1; 2; 3]) ;
+    let%expect_test "items" =
+      print (items [1; 2; 3]) ;
       [%expect {| 1, 2, 3 |}]
 
     let%expect_test "of_array" =
@@ -197,26 +197,26 @@ let%test_module _ =
       [%expect {| 0, 1, 2, 3 |}]
 
     let%expect_test "cycle" =
-      print (cycle (elems [1; 2; 3]) |> take 7) ;
+      print (cycle (items [1; 2; 3]) |> take 7) ;
       [%expect {| 1, 2, 3, 1, 2, 3, 1 |}]
 
-    let%test "head - some" = head (elems [1; 2; 3]) = Some 1
+    let%test "head - some" = head (items [1; 2; 3]) = Some 1
     let%test "head - none" = head (lazy Nil) = None
 
     let%expect_test "tail" =
-      print (tail (elems [1; 2; 3])) ;
+      print (tail (items [1; 2; 3])) ;
       [%expect {| 2, 3 |}]
 
     let%expect_test "take_while" =
-      print (elems [1; 2; 3; 4; 5] |> take_while (fun x -> x <> 3)) ;
+      print (items [1; 2; 3; 4; 5] |> take_while (fun x -> x <> 3)) ;
       [%expect {| 1, 2 |}]
 
     let%expect_test "drop" =
-      print (elems [1; 2; 3; 4] |> drop 2) ;
+      print (items [1; 2; 3; 4] |> drop 2) ;
       [%expect {| 3, 4 |}]
 
     let%expect_test "drop_while" =
-      print (elems [1; 3; 2; 5] |> drop_while (fun x -> x <> 2)) ;
+      print (items [1; 3; 2; 5] |> drop_while (fun x -> x <> 2)) ;
       [%expect {| 2, 5 |}]
 
     let%expect_test "map" =
@@ -224,11 +224,11 @@ let%test_module _ =
       [%expect {| 1, 1, 1 |}]
 
     let%expect_test "flat_map" =
-      print (enum_from 0 |> flat_map (fun x -> elems [x; x + 1]) |> take 6) ;
+      print (enum_from 0 |> flat_map (fun x -> items [x; x + 1]) |> take 6) ;
       [%expect {| 0, 1, 1, 2, 2, 3 |}]
 
     let%expect_test "filter" =
-      print (cycle (elems [1; 2]) |> filter (fun x -> x < 2) |> take 3) ;
+      print (cycle (items [1; 2]) |> filter (fun x -> x < 2) |> take 3) ;
       [%expect {| 1, 1, 1 |}]
 
     let%expect_test "map_filter" =
@@ -238,45 +238,45 @@ let%test_module _ =
       [%expect {| 0, 10, 20, 30, 40 |}]
 
     let%expect_test "flatten" =
-      print (continually (elems [1; 2; 3]) |> flatten |> take 5) ;
+      print (continually (items [1; 2; 3]) |> flatten |> take 5) ;
       [%expect {| 1, 2, 3, 1, 2 |}]
 
-    let%test "exists - yes" = exists (fun x -> x = 1) (elems [1; 2; 3])
-    let%test "exists - no" = not (exists (fun x -> x = 1) (elems [2; 3]))
+    let%test "exists - yes" = exists (fun x -> x = 1) (items [1; 2; 3])
+    let%test "exists - no" = not (exists (fun x -> x = 1) (items [2; 3]))
     let%test "for_all - empty" = for_all (fun _ -> false) (lazy Nil)
-    let%test "for_all - yes" = for_all (fun x -> x mod 2 = 0) (elems [0; 2; 4])
+    let%test "for_all - yes" = for_all (fun x -> x mod 2 = 0) (items [0; 2; 4])
 
     let%test "for_all - no" =
-      not (for_all (fun x -> x mod 2 = 0) (elems [0; 1; 4]))
+      not (for_all (fun x -> x mod 2 = 0) (items [0; 1; 4]))
 
-    let%test "find - some" = Some 3 = find (fun x -> x = 3) (elems [1; 3; 5])
-    let%test "find - none" = None = find (fun x -> x > 100) (elems [10; 20])
+    let%test "find - some" = Some 3 = find (fun x -> x = 3) (items [1; 3; 5])
+    let%test "find - none" = None = find (fun x -> x > 100) (items [10; 20])
 
     let%expect_test "concat" =
-      print (concat (elems [1; 2; 3]) (elems [4; 5; 6])) ;
+      print (concat (items [1; 2; 3]) (items [4; 5; 6])) ;
       [%expect {| 1, 2, 3, 4, 5, 6 |}]
 
     let%expect_test "zip_with" =
-      print (zip_with (fun x y -> x + y) (elems [1; 2; 3]) (elems [10; 20; 30])) ;
+      print (zip_with (fun x y -> x + y) (items [1; 2; 3]) (items [10; 20; 30])) ;
       [%expect {| 11, 22, 33 |}]
 
     let%test "zip" =
       [(1, 10); (2, 20); (3, 30)]
-      = (zip (elems [1; 2; 3]) (elems [10; 20; 30]) |> strict)
+      = (zip (items [1; 2; 3]) (items [10; 20; 30]) |> strict)
 
     let%expect_test "zip_all_with" =
       print
         (zip_all_with
            (fun x y -> match (x, y) with Some x, Some y -> x + y | _ -> -1)
-           (elems [2; 3])
-           (elems [10; 20; 30])) ;
+           (items [2; 3])
+           (items [10; 20; 30])) ;
       [%expect {| 12, 23, -1 |}]
 
     let%test "zip_all" =
       [(Some 1, Some 1); (Some 2, Some 2); (None, Some 3)]
-      = (zip_all (elems [1; 2]) (elems [1; 2; 3]) |> strict)
+      = (zip_all (items [1; 2]) (items [1; 2; 3]) |> strict)
 
-    let%test "strict" = [1; 2; 3] = strict (elems [1; 2; 3])
+    let%test "strict" = [1; 2; 3] = strict (items [1; 2; 3])
 
     let%test "fold_right" =
       55 = fold_right (lazy 0) (fun x n -> x + !!n) (enum_from_to 1 10)
@@ -284,7 +284,7 @@ let%test_module _ =
     let%test "fold_left" =
       55 = fold_left 0 (fun n x -> n + x) (enum_from_to 1 10)
 
-    let%test "length" = 3 = length (elems [1; 2; 3])
-    let%test "equal - yes" = equal ( = ) (elems [1; 2; 3]) (elems [1; 2; 3])
-    let%test "equal - no" = not (equal ( = ) (elems [1; 2; 3]) (continually 1))
+    let%test "length" = 3 = length (items [1; 2; 3])
+    let%test "equal - yes" = equal ( = ) (items [1; 2; 3]) (items [1; 2; 3])
+    let%test "equal - no" = not (equal ( = ) (items [1; 2; 3]) (continually 1))
   end )
