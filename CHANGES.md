@@ -1,3 +1,9 @@
+v0.3.1
+-------
+2020-09-17
+
+- Correct a reference to a nonexistent function in the documentation
+
 v0.3.0
 -------
 2020-09-16
