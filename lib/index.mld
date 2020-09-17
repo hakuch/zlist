@@ -57,7 +57,7 @@ has been executed.
         sort smaller ++ unit x ++ sort greater
   in
   
-  sort (elems [10; 2; 8; 5; 1; 0; 20; 3]) |> strict
+  sort (items [10; 2; 8; 5; 1; 0; 20; 3]) |> strict
 ]}
 {[ - : int list = [0; 1; 2; 3; 5; 8; 10; 20] ]}
 
