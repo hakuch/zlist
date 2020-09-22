@@ -14,9 +14,10 @@ run-test: [
   ["dune" "runtest" "-p" name "-j" jobs]
 ]
 depends: [
-  "dune" {build & >= "2.7.0"}
+  "dune" {>= "2.7.0"}
   "odoc" {with-doc}
-  "ppx_expect" {build}
+  "ppx_expect" {with-test}
+  "ppx_inline_test" {with-test}
 ]
 synopsis: "Lazy lists for OCaml"
 description: "zlist consists of the definition of a lazy list type and a number of useful functions for manipulating and constructing lazy lists."
