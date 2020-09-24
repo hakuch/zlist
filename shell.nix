@@ -18,6 +18,7 @@ pkgs.mkShell {
     findlib
     ppx_expect
     odoc
+    merlin
     utop
   ]);
 }
