@@ -1,7 +1,5 @@
 (library
- (public_name zlist)
- (inline_tests)
- (preprocess
-  (pps ppx_expect)))
+ (public_name zlist))
 
-(documentation (package zlist))
+(documentation
+ (package zlist))
