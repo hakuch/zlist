@@ -1,4 +1,6 @@
 opam-version: "2.0"
+synopsis: "Lazy lists for OCaml"
+description: "zlist consists of the definition of a lazy list type and a number of useful functions for manipulating and constructing lazy lists."
 maintainer: "Jesse Haber-Kucharsky <jesse@haber-kucharsky.com>"
 authors: "Jesse Haber-Kucharsky <jesse@haber-kucharsky.com>"
 homepage: "https://gitlab.com/jhaberku/Zlist"
@@ -19,5 +21,3 @@ depends: [
   "ppx_expect" {with-test}
   "ppx_inline_test" {with-test}
 ]
-synopsis: "Lazy lists for OCaml"
-description: "zlist consists of the definition of a lazy list type and a number of useful functions for manipulating and constructing lazy lists."
