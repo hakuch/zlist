@@ -14,6 +14,7 @@ pkgs.mkShell {
     ocamlformat
     ocamlPackages.ocaml
   ] ++ (with ocamlPackages; [
+    dune-release
     dune_2
     findlib
     ppx_expect
