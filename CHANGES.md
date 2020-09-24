@@ -1,3 +1,9 @@
+v0.3.3
+-------
+2020-09-23
+
+- Restructure tests so that the package itself has no dependencies other than at build-time
+
 v0.3.2
 -------
 2020-09-22
