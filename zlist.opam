@@ -16,7 +16,7 @@ run-test: [
   ["dune" "runtest" "-p" name "-j" jobs]
 ]
 depends: [
-  "dune" {>= "2.7.0"}
+  "dune" {>= "2.7"}
   "odoc" {with-doc}
   "ppx_expect" {with-test}
   "ppx_inline_test" {with-test}
