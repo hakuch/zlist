@@ -3,7 +3,7 @@ stages:
   - deploy
 
 variables:
-  DOCKER_IMAGE: "registry.gitlab.com/jhaberku/zlist:ci"
+  DOCKER_IMAGE: "registry.gitlab.com/jhaberku/zlist:fedora-33-4.12.0"
 
 compile_and_test:
   stage: build
@@ -11,6 +11,7 @@ compile_and_test:
     - shared
   image: $DOCKER_IMAGE
   script:
+    - eval $(opam env)
     - opam update
     - opam pin -y -n add zlist .
     - opam install -y -t -d --deps-only zlist

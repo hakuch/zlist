@@ -1,4 +1,3 @@
-FROM ocaml/opam-dev:ubuntu
-RUN opam remote remove default --all
-RUN opam remote add default https://opam.ocaml.org/2.0
-RUN opam install dune odoc ppx_expect
+FROM fedora:33
+RUN dnf install -y diffutils git m4 opam
+RUN opam init --disable-sandboxing -y --comp=4.12.0
