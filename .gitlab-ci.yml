@@ -7,8 +7,6 @@ variables:
 
 compile_and_test:
   stage: build
-  tags:
-    - shared
   image: $DOCKER_IMAGE
   script:
     - eval $(opam env)
@@ -25,8 +23,6 @@ compile_and_test:
 
 pages:
   stage: deploy
-  tags:
-    - shared
   only:
     - master
   dependencies:
