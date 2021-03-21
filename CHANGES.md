@@ -1,3 +1,12 @@
+v0.4.0
+-------
+2021-03-21
+
+- Remove all dependencies (including in tests)
+- Generate the opam file from Dune
+- Switch the development environment to use Nix flakes
+- Use a Fedora Docker container for CI
+
 v0.3.3
 -------
 2020-09-23
