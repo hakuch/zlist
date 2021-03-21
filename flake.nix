@@ -17,6 +17,7 @@
         ] ++ (with pkgs.ocamlPackages; [
           dune_2
           findlib
+          merlin
           ocaml
           odoc
           ppx_expect
