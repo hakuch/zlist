@@ -1,3 +1,6 @@
+(* Copyright 2016 Jesse Haber-Kucharsky *)
+(* SPDX-License-Identifier: Apache-2.0 *)
+
 let ( !! ) = Lazy.force
 
 type 'a t = 'a node Lazy.t

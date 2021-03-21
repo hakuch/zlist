@@ -1,3 +1,6 @@
+(* Copyright 2016 Jesse Haber-Kucharsky *)
+(* SPDX-License-Identifier: Apache-2.0 *)
+
 (** Lazily-realized lists. *)
 
 (** {1 Representation} *)
