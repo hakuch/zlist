@@ -1,6 +1,3 @@
-(library
+(test
  (name test_zlist)
- (libraries zlist)
- (inline_tests)
- (preprocess
-  (pps ppx_expect)))
+ (libraries zlist))

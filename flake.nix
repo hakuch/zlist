@@ -20,7 +20,6 @@
           merlin
           ocaml
           odoc
-          ppx_expect
           utop
         ]);
       };

@@ -12,7 +12,4 @@
 (package
  (name zlist)
  (synopsis "Lazy lists for OCaml")
- (description "zlist consists of the definition of a lazy list type and a number of useful functions for manipulating and constructing lazy lists.")
- (depends
-  (ppx_expect :with-test)
-  (ppx_inline_test :with-test)))
+ (description "zlist consists of the definition of a lazy list type and a number of useful functions for manipulating and constructing lazy lists."))

@@ -10,8 +10,6 @@ homepage: "https://gitlab.com/jhaberku/Zlist"
 bug-reports: "https://gitlab.com/jhaberku/Zlist/issues"
 depends: [
   "dune" {>= "2.7"}
-  "ppx_expect" {with-test}
-  "ppx_inline_test" {with-test}
   "odoc" {with-doc}
 ]
 build: [
