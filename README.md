@@ -6,9 +6,9 @@
 
 ## About
 
-Development is hosted at [GitLab](https://gitlab.com/jhaberku/Zlist) and mirrored at [GitHub](https://github.com/hakuch/Zlist).
+Development is hosted on [GitHub](https://github.com/hakuch/zlist).
 
-API documentation can be found [online](http://jhaberku.gitlab.io/Zlist/zlist).
+API documentation can be found [online](https://hakuch.github.io/zlist).
 
 ## Inspiration
 

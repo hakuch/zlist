@@ -4,9 +4,8 @@
 
 (authors "Jesse Haber-Kucharsky <jesse@haber-kucharsky.com>")
 (maintainers "Jesse Haber-Kucharsky <jesse@haber-kucharsky.com>")
-(homepage "https://gitlab.com/jhaberku/Zlist")
-(source (uri "git+https://gitlab.com/jhaberku/Zlist"))
-(bug_reports "https://gitlab.com/jhaberku/Zlist/issues")
+(source (github hakuch/zlist))
+(documentation https://hakuch.github.io/zlist)
 (license Apache-2.0)
 
 (package
