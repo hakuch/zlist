@@ -1,4 +1,4 @@
-{0 [%%NAME%%] - Lazily-realized lists for OCaml}
+{0 [%%NAME%%] - Lazy lists for OCaml}
 
 This is version %%VERSION_NUM%%, which is released under the terms of the %%PKG_LICENSE%% license.
 

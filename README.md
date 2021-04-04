@@ -2,7 +2,7 @@
 
 %%VERSION%%
 
-`zlist` consists of the definition of a lazy list type and a number of useful functions for manipulating and constructing lazy lists.
+Zlist defines the type of a lazy list and many useful functions on it.
 
 ## About
 
@@ -16,7 +16,7 @@ This implementation is heavily inspired by "Functional Programming in Scala", by
 
 ## Installing
 
-The easiest way to install `zlist` is through the `opam` repository:
+The easiest way to install Zlist is through the [opam package](https://opam.ocaml.org/packages/zlist/):
 
 ```bash
 $ opam install zlist
@@ -24,7 +24,6 @@ $ opam install zlist
 
 ## License
 
-`zlist` is copyright 2016 by Jesse Haber-Kucharsky.
+Zlist is copyright 2016 by Jesse Haber-Kucharsky.
 
-`zlist` is released under the terms of the Apache license, version 2.0. See
-`/LICENSE` for more information.
+Zlist is released under the terms of the Apache license, version 2.0. See `/LICENSE` for more information.
