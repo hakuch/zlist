@@ -11,4 +11,4 @@
 (package
  (name zlist)
  (synopsis "Lazy lists for OCaml")
- (description "A lazy list type and many useful functions on it."))
+ (description "A lazy list type and many useful functions for it."))

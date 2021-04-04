@@ -2,7 +2,7 @@
 
 %%VERSION%%
 
-Zlist defines the type of a lazy list and many useful functions on it.
+Zlist defines a lazy list type and many useful functions for it.
 
 ## About
 
