@@ -20,7 +20,6 @@ jobs:
         uses: ocaml/setup-ocaml@v2
         with:
           ocaml-compiler: ${{ matrix.ocaml-compiler }}
-      - run: opam pin add zlist.dev . --no-action
       - run: opam install . --deps-only --with-doc --with-test
       - run: opam exec -- dune build
       - run: opam exec -- dune runtest
