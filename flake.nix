@@ -2,7 +2,7 @@
   description = "Lazy lists for OCaml.";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-20.09";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.05";
   };
 
   outputs = { self, nixpkgs }:

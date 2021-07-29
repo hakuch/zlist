@@ -44,8 +44,7 @@ let () = assert (strict (tail (items [1; 2; 3])) = [2; 3])
 
 (* [take_while] *)
 let () =
-  assert (strict (items [1; 2; 3; 4; 5] |> take_while (fun x -> x <> 3)) = [1; 2]
-  )
+  assert (strict (items [1; 2; 3; 4; 5] |> take_while (fun x -> x <> 3)) = [1; 2] )
 
 (* [drop] *)
 let () = assert (strict (items [1; 2; 3; 4] |> drop 2) = [3; 4])
@@ -81,8 +80,7 @@ let () =
 (* [flatten] *)
 let () =
   assert (
-    strict (continually (items [1; 2; 3]) |> flatten |> take 5) = [1; 2; 3; 1; 2]
-  )
+    strict (continually (items [1; 2; 3]) |> flatten |> take 5) = [1; 2; 3; 1; 2] )
 
 (* [exists] *)
 let () =
@@ -124,7 +122,7 @@ let () =
       (zip_all_with
          (fun x y -> match (x, y) with Some x, Some y -> x + y | _ -> -1)
          (items [2; 3])
-         (items [10; 20; 30]))
+         (items [10; 20; 30]) )
     = [12; 23; -1] )
 
 (* [zip_all] *)
@@ -139,8 +137,7 @@ let () = assert (strict (items [1; 2; 3]) = [1; 2; 3])
 (* [fold_right] *)
 let () =
   assert (
-    fold_right (fun x n -> x + Lazy.force n) (enum_from_to 1 10) (lazy 0) = 55
-  )
+    fold_right (fun x n -> x + Lazy.force n) (enum_from_to 1 10) (lazy 0) = 55 )
 
 (* [fold_left] *)
 let () = assert (fold_left (fun n x -> n + x) 0 (enum_from_to 1 10) = 55)
