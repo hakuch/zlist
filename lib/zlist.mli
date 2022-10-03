@@ -5,9 +5,7 @@
 
 (** {1 Representation} *)
 
-type 'a t = 'a node Lazy.t
-
-and 'a node = Nil | Cons of 'a * 'a t
+type 'a t = 'a node Lazy.t and 'a node = Nil | Cons of 'a * 'a t
 
 (** {1 Printing} *)
 

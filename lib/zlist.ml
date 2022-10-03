@@ -3,9 +3,7 @@
 
 let ( !! ) = Lazy.force
 
-type 'a t = 'a node Lazy.t
-
-and 'a node = Nil | Cons of 'a * 'a t
+type 'a t = 'a node Lazy.t and 'a node = Nil | Cons of 'a * 'a t
 
 let rec iter f = function
   | (lazy Nil) -> ()
