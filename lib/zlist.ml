@@ -3,17 +3,21 @@
 
 let ( !! ) = Lazy.force
 
-type 'a t = 'a node Lazy.t and 'a node = Nil | Cons of 'a * 'a t
+type 'a t = 'a node Lazy.t
+and 'a node = Nil | Cons of 'a * 'a t
 
 let rec iter f = function
   | (lazy Nil) -> ()
-  | (lazy (Cons (x, t))) -> f x ; iter f t
+  | (lazy (Cons (x, t))) ->
+      f x;
+      iter f t
 
 let pp ~sep pp_item ppf t =
   let is_first = ref true in
   let print ppf v =
-    if !is_first then is_first := false else sep ppf () ;
-    pp_item ppf v in
+    if !is_first then is_first := false else sep ppf ();
+    pp_item ppf v
+  in
   iter (print ppf) t
 
 let rec fold_right f t z =
@@ -37,7 +41,8 @@ let rec continually x = lazy (Cons (x, continually x))
 let fold_left f z t =
   let rec loop acc = function
     | (lazy Nil) -> acc
-    | (lazy (Cons (x, t))) -> loop (f acc x) t in
+    | (lazy (Cons (x, t))) -> loop (f acc x) t
+  in
   loop z t
 
 let rec take n t =
@@ -120,7 +125,7 @@ let zip_all_with f t1 t2 =
     | (lazy (Cons (x, t1))), (lazy Nil) -> Some ((t1, lazy Nil), f (Some x) None)
     | (lazy Nil), (lazy (Cons (y, t2))) -> Some ((lazy Nil, t2), f None (Some y))
     | (lazy (Cons (x, t1))), (lazy (Cons (y, t2))) ->
-        Some ((t1, t2), f (Some x) (Some y)) )
+        Some ((t1, t2), f (Some x) (Some y)))
 
 let zip_all t1 t2 = zip_all_with (fun x y -> (x, y)) t1 t2
 
@@ -130,7 +135,7 @@ let equal f t1 t2 =
       match (xo, yo) with
       | Some _, None | None, Some _ -> false
       | Some x, Some y -> f x y
-      | None, None -> assert false )
+      | None, None -> assert false)
     t1 t2
   |> for_all (fun x -> x)
 
@@ -142,7 +147,8 @@ let flat_map f t = map f t |> flatten
 
 let map_filter f t =
   fold_right
-    (fun x lt -> match f x with Some y -> lazy (Cons (y, !!lt)) | None -> !!lt)
+    (fun x lt ->
+      match f x with Some y -> lazy (Cons (y, !!lt)) | None -> !!lt)
     t
     (lazy (lazy Nil))
 
