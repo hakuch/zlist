@@ -8,9 +8,7 @@ This is version %%VERSION_NUM%%, which is released under the terms of the %%PKG_
 
 A lazy list is like an OCaml [list], except that next element is lazily computed. These lists behave like the [List] type in Haskell.
 
-This structure allows allows arbitrary transformations to be executed without forcing each intermediate representation in memory.
-
-Another interesting property of lazy lists is that infinite structures can be constructed without being evaluated.
+An interesting property of lazy lists is that infinite structures can be constructed without being evaluated.
 
 For example, this is an infinite list of the value [0]:
 

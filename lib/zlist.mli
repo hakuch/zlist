@@ -3,7 +3,16 @@
 
 (** Lazily-realized lists. *)
 
-(** {1 Representation} *)
+(** {1 Representation}
+
+    This is the so-called "even" representation. The "odd" representation of
+
+    {[
+      type 'a t = Nil | Cons of 'a * 'a t Lazy.t
+    ]}
+
+    forces too much evaluation of the list. This is explained in "How to add
+    laziness to a strict language without being odd" by Wadler et al (1999). *)
 
 type 'a t = 'a node Lazy.t
 and 'a node = Nil | Cons of 'a * 'a t
